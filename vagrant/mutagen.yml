@@ -1,0 +1,25 @@
+# Change the description of alpha to match the directory where the project you want to run in your Docker container resides.
+# It is also possible to specify multiple projects in the Root.
+sync:
+  defaults:
+    permissions:
+      defaultFileMode: 0644
+      defaultDirectoryMode: 0755
+  app:
+    mode: "two-way-resolved"
+    alpha: "/Users/user/dev"
+    beta: "host.app.local:/home/vagrant/app"
+    configurationBeta:
+      permissions:
+        defaultFileMode: 0666
+        defaultDirectoryMode: 0777
+    ignore:
+      vcs: true
+      paths:
+        - ".git/"
+        - "node_modules/"
+        - "log/"
+        - "tmp/"
+        - "vendor/"
+        - "volumes/"
+        - "storage/"

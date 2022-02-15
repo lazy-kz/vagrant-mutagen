@@ -1,0 +1,29 @@
+Vagrant.configure('2') do |config|
+  config.vm.box = 'bento/ubuntu-20.04'
+
+  config.vm.hostname = 'host.app.local'
+  config.vm.network :private_network, ip: '192.168.56.10'
+
+  config.vm.provider :virtualbox do |vb|
+    vb.gui = false
+    # This area should be changed depending on the machine spec.
+    # The default is to assign 4 CPU cores and 8G of memory to the VM.
+    vb.cpus = 4
+    vb.memory = 8192
+    vb.customize ['modifyvm', :id, '--natdnsproxy1', 'off']
+    vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'off']
+  end
+  config.disksize.size = '64GB'
+  config.mutagen.orchestrate = true
+  config.vm.provision :docker, run: 'always'
+  config.vm.provision :docker_compose
+
+  # Map the directory where the project you want to mount to the VM is located.
+  # The directory here will be mounted on the VM.
+  # Caution.
+  # It is better to erase the description of synced_folder after the first boot to mount the VM.
+  # If you leave this setting, the permissions will always be overwritten by the host's settings at 
+  # boot time if the host and VM have different permissions settings, which can cause problems.
+  # Even if you delete the file, there is no particular problem because the file synchronization with the VM is done separately by Mutagen.
+  config.vm.synced_folder '/Users/user/dev', '/home/vagrant/app', mount_options: ['dmode=777','fmode=777']  , type: 'rsync', rsync__auto: true, rsync__exclude: ['.git/','node_modules/', 'log/','volumes/','vendor/','tmp/']
+end
