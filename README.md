@@ -1,13 +1,17 @@
 # Building a Docker environment with vagrant + mutagen
  
+## This repository provides a way to use Docker engine on Mac about x2 faster than Docker For Mac.
+
 # Preface
 Docker For Mac has been known for its slow performance.
 
 This problem is due to the overhead of the File I/O API provided by Apple for bi-directional file sharing between different file systems in Mac(APFS) and in Docker engine(basically, ext4)
 
+[The detail of this problrem was explained by docker staff in forum. ](https://forums.docker.com/t/file-access-in-mounted-volumes-extremely-slow-cpu-bound/8076/158)
+
 This problem is so deep-rooted that it has not been solved even several years after the release of Docker For Mac, and there is still no solution in sight.
 
-Under the circumstances, [Docker For Mac changed to paid subscription for large businesses]. ( https://www.docker.com/blog/updating-product-subscriptions/ )
+Under the circumstances, [Docker Inc. was changed Docker For Mac as paid subscription for large businesses.]( https://www.docker.com/blog/updating-product-subscriptions/ )
 
 Personally, Docker For Mac is not a product that I would dare to pay for and continue to use, nor is it essential to use Docker For Mac to use Docker engine.
 
