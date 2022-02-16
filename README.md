@@ -7,7 +7,7 @@ Docker For Mac has been known for its slow performance.
 
 This problem is due to the overhead of the File I/O API provided by Apple for bi-directional file sharing between different file systems in Mac(APFS) and in Docker engine(basically, ext4)
 
-[The detail of this problrem was explained by docker staff in forum. ](https://forums.docker.com/t/file-access-in-mounted-volumes-extremely-slow-cpu-bound/8076/158)
+[For more information on this issue, a Docker staff explains it in their forum. ](https://forums.docker.com/t/file-access-in-mounted-volumes-extremely-slow-cpu-bound/8076/158)
 
 This problem is so deep-rooted that it has not been solved even several years after the release of Docker For Mac, and there is still no solution in sight.
 
@@ -20,7 +20,7 @@ For this reason, I decided to use this Git repository to provide a way to use Do
 
 In this case, the speed bottleneck described above will no longer occur.
 
-Therefore, for projects like Rails ,Laravel which require a large amount of file I/O, the server operation speed can be greatly accelerated.
+Therefore, for projects that require a large amount of file I/O, such as Rails and Laravel, the server can run much faster.
 
 # Installation
 
@@ -61,13 +61,6 @@ If vagrant doesn't start, run the following command in Terminal on your Mac, giv
 
  sudo apt update && sudo apt upgrade
 
- sudo apt install acl net-tools
-
- pushd app
-
- find . -print0 | xargs -0 chmod a+w
-
- setfacl -dm u:$(id -un):rwx,o::rwx $(pwd)
 ```
 
 8. For the project to be migrated to Vagrant development, replace the host descriptions `host.docker.internal` and `localhost` in .env and MySQLWorkbench with the description `host.app.local`. Replace the host description with `host.app.local`.
@@ -86,7 +79,7 @@ If vagrant doesn't start, run the following command in Terminal on your Mac, giv
 
 ## About Mutagen
 
- File I/O, which was a bottleneck in Docker For Mac, is covered by bi-directional collaboration using mutagen.
+ In the acceleration method provided in this repository, the file I/O part, which has been a bottleneck in Docker For Mac, is covered by bi-directional collaboration using mutagen.
 
  (This solution was previously considered in the preview version of Docker For Mac, but there were many issues with permissions, etc., and it was soon discontinued.)
 
@@ -97,9 +90,9 @@ If vagrant doesn't start, run the following command in Terminal on your Mac, giv
  You can check the status of mutagen by running `mutagen sync list` on the host side, so if you suspect that your changes are not reflected, please run it accordingly.
 
  If it is not working, there is a problem with mutagen configuration or permissions.
-```shell
+```bash
  # If mutagen is running
- > mutagen sync list
+ $ mutagen sync list
 
  --------------------------------------------------------------------------------
  Name: app
@@ -116,9 +109,9 @@ If vagrant doesn't start, run the following command in Terminal on your Mac, giv
  --------------------------------------------------------------------------------
 ```
 
-```shell
+```bash
  # If mutagen is not running
- > mutagen sync list
+ $ mutagen sync list
 
  --------------------------------------------------------------------------------
  No sessions found
@@ -129,7 +122,7 @@ If vagrant doesn't start, run the following command in Terminal on your Mac, giv
 
  This project is not avairable in Apple Silicone Architecture like Apple M1.
 
- This is because as of January 2022, almost all of the major VMs does not support  Apple Silicone.
+ This is because almost all of the major VMs do not support Apple Silicone.
 
  You can make them work if you try hard enough, but you will have to choose between using paid software or accepting performance degradation.
 
